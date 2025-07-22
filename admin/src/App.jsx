@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Products from './pages/Products';
@@ -9,12 +10,16 @@ import Users from './pages/Users';
 import Analytics from './pages/Analytics';
 
 function App() {
-  console.log('App component rendered');
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
   return (
     <Router>
       <div className="flex h-screen">
-        <Sidebar />
-        <div className="flex-1">
+        <Sidebar
+          isOpen={sidebarOpen}
+          toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+        />
+        <div className={`flex-1 transition-all ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
           <Header />
           <div className="p-6">
             <Routes>

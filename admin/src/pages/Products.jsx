@@ -27,54 +27,54 @@ function Products() {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Product Management</h1>
-      <table className="w-full border">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="p-3">Image</th>
-            <th className="p-3">Name</th>
-            <th className="p-3">Price</th>
-            <th className="p-3">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-        {products
+    <div className="p-6 max-w-6xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">🛒 Product Management</h1>
+
+      {products.length === 0 ? (
+        <div className="text-gray-500 text-center py-20">
+          No products available.
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {products
             .filter(
-            (product) =>
+              (product) =>
                 product.name?.trim() !== "" &&
                 product.price &&
                 product.image?.trim() !== ""
             )
             .map((product) => (
-            <tr key={product._id} className="border-t">
-                <td className="p-3">
+              <div
+                key={product._id}
+                className="bg-white shadow-lg rounded-xl overflow-hidden transition-transform hover:scale-105"
+              >
                 <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-16 h-16 object-cover"
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-48 object-cover"
                 />
-                </td>
-                <td className="p-3">{product.name}</td>
-                <td className="p-3">₹{product.price}</td>
-                <td className="p-3 flex gap-2">
-                <button
-                    onClick={() => navigate(`/edit/${product._id}`)}
-                    className="bg-blue-500 text-white px-4 py-1 rounded"
-                >
-                    Edit
-                </button>
-                <button
-                    onClick={() => handleDelete(product._id)}
-                    className="px-4 py-1 bg-red-500 text-white rounded"
-                >
-                    Delete
-                </button>
-                </td>
-            </tr>
+                <div className="p-4">
+                  <h2 className="text-lg font-semibold text-gray-800">{product.name}</h2>
+                  <p className="text-gray-600 mt-1 text-sm">Price: ₹{product.price}</p>
+                  <div className="flex gap-3 mt-4">
+                    <button
+                      onClick={() => navigate(`/edit/${product._id}`)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm cursor-pointer"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(product._id)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm cursor-pointer"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
             ))}
-        </tbody>
-      </table>
+        </div>
+      )}
     </div>
   );
 }

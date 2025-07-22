@@ -9,6 +9,11 @@ const orderRoutes = require('./routes/orderRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
 
 dotenv.config();
+console.log({
+  name: process.env.CLOUDINARY_NAME,
+  key: process.env.CLOUDINARY_API_KEY,
+  secret: process.env.CLOUDINARY_API_SECRET
+});
 connectDB();
 
 const app = express();
@@ -20,6 +25,7 @@ app.use('/api/auth', authRoutes);  // ✅ Add auth routes here
 app.use('/api/users', userRoutes);  // ✅ Add user routes here
 app.use('/api/orders', orderRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/uploads', express.static('uploads'));
 
 
 const PORT = process.env.PORT || 5000;
